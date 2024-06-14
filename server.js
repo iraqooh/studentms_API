@@ -1,140 +1,69 @@
 // import modules
 
-// REST API tool for HTTP requests + responses
+// building REST APIs
 const express = require("express");
 
-// Incoming request parser with data payloads (JSON, URL-encoded or multipart/form-data)
-const bodyparser = require("body-parser");
+// helps to parse the json requests and create request objects
+const bodyParser = require("body-parser");
 
 const app = express();
 
-// enable application to parse requests with 
-// content-type - application/json
-app.use(bodyparser.json());
+// parse requests of content-type - application/json
+app.use(bodyParser.json());
 
-// content-type - application/x-www-form-urlencoded
-app.use(bodyparser.urlencoded({ extended: true }));
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extendend: true }));
 
-// import database object containing sequelize instance with db configurations
-const db = require("./models")
+// importing models
+const db = require("./models");
 
-// synchronize the database models with the database schema
-db.sequelize_config.sync({
-    force: false // do not to drop and recreate the tables. 
-    // If set to true, it will drop the tables first
-}).then(() => {
-    console.log("--- DB synchronization success! ---");
-});
+db.sequelize_config.sync(
+    {force: false}
+).then(
+    () => { console.log("DB synchronised")}
+);
 
-// API route definitions
-app.get("/home", (req, res) => {
-    res.json({
-        "status": "OK",
-        "status_code": 100,
-        "message": "Welcome to Student MS"
-    });
+
+// API Routes
+
+app.get("/n", (req, res) => {
+    res.json(
+        {
+            "status": "Sucess",
+            "status_code": 100,
+            "message": "Welcome to Student MS"
+        }
+    );
 });
 
 app.post("/data", (req, res) => {
-    const name = req.body.name;
-
-    if (!name) {
+    const data = req.body.data_r;
+    if(!data){
         res.json({
-            "error": "No data received!"
-        });
-    } else {
-        res.json({
-            "status": "OK",
+            "status": "Error",
             "status_code": 101,
-            "message": "Data received",
-            "data": `Name: ${name}`
+            "message": "No Data is available",
         });
+    }else{
+        res.json(
+            {
+                "status": "Sucess",
+                "status_code": 100,
+                "message": "Welcome to Student MS",
+                "data": `Result - ${data}`
+            }
+        );
     }
+    
 });
 
-app.post("/calculate", (req, res) => {
-    const operand1 = req.body.operand_1;
-    const operand2 = req.body.operand_2;
-    const operator = req.body.operator;
+// import student routes
+require("./routes/student.routes")(app); 
 
-    let result = 0.0;
-
-    switch(operator) {
-        case "+":
-            result = operand1 + operand2;
-            break;
-        case "-":
-            result = operand1 - operand2;
-            break;
-        case "*":
-            result = operand1 * operand2;
-            break;
-        case "/":
-            result = operand1 / operand2;
-            break;
-        case "%":
-            result = operand1 % operand2;
-            break;
-        case "^":
-            result = Math.pow(operand1, operand2);
-            break;
-        case "sqrt":
-            result = Math.sqrt(operand1);
-            break;
-        default:
-            result = null;
-    }
-
-    res.json({
-        "output": result
-    });
-});
-
-app.get("/calculate", (req, res) => {
-    const operand1 = parseFloat(req.query.operand_1);
-    const operator = req.query.operator;
-    const operand2 = parseFloat(req.query.operand_2);
-
-    let result = 0.0;
-
-    switch(operator) {
-        case "+":
-            result = operand1 + operand2;
-            break;
-        case "-":
-            result = operand1 - operand2;
-            break;
-        case "*":
-            result = operand1 * operand2;
-            break;
-        case "/":
-            result = operand1 / operand2;
-            break;
-        case "%":
-            result = operand1 % operand2;
-            break;
-        case "^":
-            result = Math.pow(operand1, operand2);
-            break;
-        case "sqrt":
-            result = Math.sqrt(operand1);
-            break;
-        default:
-            result = null;
-    }
-
-    res.json({
-        "output": result
-    });
-});
-
-// import route function and pass the instance of the server as an argument
-require("./routes/student.routes")(app);
-
-// port specification
+// define port for project
 const PORT = 8081;
 
-// start server
+// Monitor when server starts
 app.listen(PORT, () => {
     console.log(`Server has started on port ${PORT}`);
 });

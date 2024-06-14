@@ -1,15 +1,18 @@
 module.exports = {
-    HOST: "localhost", // database server's host
-    USER: "root",
-    PASSWORD: "",
-    DB: "studentms",
-    dialect: "mysql", // type of database (e.g., 'mysql', 'postgres')
-    pool: { // connection pool settings
-        // upper limit of simultaneous connections
+    HOST: "localhost", // hostname
+    PORT: "3306",
+    USER: "root", // username
+    PASSWORD: "", // user password
+    DB: "studentms2", // database name
+    dialect: "mysql", // database type
+    pool: {
+        // maximum number of connections
         max: 5,
-        // minimum number of connections in the pool
+        // minimum number of connections
         min: 0,
-        acquire: 30000, // timeout
-        idle: 10000, // idle time before a connection is released
+        // maximum time in milliseconds, that the pool will try to get a connection
+        acquire: 30000,
+        // maximum time, in milliseconds, that the connection can be idle before being released
+        idle: 10000
     }
 }
