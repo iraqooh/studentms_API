@@ -7,14 +7,13 @@ This is a student management system built using Express.js, MySQL, and XAMPP. Th
 ## Technologies Used
 
 - Express.js (Node.js framework)
-- MySQL (database management system)
 - XAMPP (Apache and MySQL stack)
-- Sequelize (ORM for MySQL)
+- Sequelize (ORM for database interactions)
 - Joi (validation library)
 
 ## Installation
 
-1. Clone the repository: `git clone ([https://github.com/iraqooh/studentms_API.git](url {:target="_blank"}))
+1. Clone the repository: `git clone [https://github.com/iraqooh/studentms_API.git] (url {:target="_blank"})
 2. Install dependencies: npm install
 3. Update the database credentials in config/db.js and create a MySQL database with the specified name.
 4. Start the server: ```npm start```
@@ -85,6 +84,10 @@ The database schema is defined in models/. The schema includes the following tab
 ## Validation
 
 Validation is handled using Joi. The validation rules are defined in each object creation protocol in controllers/student.controller.js.
+
+## Author
+
+Harry, Iraku
 
 ## Contributing
 
