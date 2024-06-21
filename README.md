@@ -13,7 +13,7 @@ This is a student management system built using Express.js, MySQL, and XAMPP. Th
 
 ## Installation
 
-1. Clone the repository: `git clone (https://github.com/iraqooh/studentms_API.git)`
+1. [Clone](https://github.com/iraqooh/studentms_API.git){:target="_blank"} the repository: `git clone https://github.com/iraqooh/studentms_API.git`
 2. Install dependencies: npm install
 3. Update the database credentials in config/db.js and create a MySQL database with the specified name.
 4. Start the server: ```npm start```
