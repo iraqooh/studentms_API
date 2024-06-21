@@ -2,22 +2,23 @@
 
 ## Introduction
 
-This is a student management system built using Express.js, MySQL, and XAMPP. The system allows you to create, read, update, and delete (CRUD) student records, as well as manage their financial information.
+This is a student management system built using Express.js, MySQL, and XAMPP. The system allows you to create, read, update, and delete (CRUD) student records, financial information, library book rentals, courses, their instructors as well as manage the student prefecture.
 
 ## Technologies Used
 
 - Express.js (Node.js framework)
-- XAMPP (Apache and MySQL stack)
+- XAMPP or WAMPP (Apache and MySQL stack)
 - Sequelize (ORM for database interactions)
 - Joi (validation library)
 
 ## Installation
 
-1. [Clone](https://github.com/iraqooh/studentms_API.git){:target="_blank"} the repository: `git clone https://github.com/iraqooh/studentms_API.git`
+1. [Clone](https://github.com/iraqooh/studentms_API.git) the repository: `git clone https://github.com/iraqooh/studentms_API.git`
 2. Install dependencies: npm install
 3. Update the database credentials in config/db.js and create a MySQL database with the specified name.
-4. Start the server: ```npm start```
-5. Access the API endpoints using a tool like Postman, Insomnia, VS Code's Thunder Client or cURL.
+4. Launch XAMPP or WAMPP and start the Apache and MySQL database servers.
+5. Open the project folder in VS Code and start the Express server: ```npm start```
+6. Access the API endpoints using a tool like Postman, Insomnia, cURL or VS Code's Thunder Client extension.
 
 ## API Endpoints
 
