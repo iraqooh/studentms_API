@@ -1048,7 +1048,7 @@ exports.FindPrefect = async (req, res) => {
             }).catch(err => {
                 respond(res, "error", 419, "Database read operation failure", null, err);
             })
-        } else if (req.query.position || req.query.description || req.query.term_start || req.query.term_end) {
+        } else if (req.query.position || req.query.description) {
     
             if (req.query.position) {
                 whereClause.push({ position: { [operation.like]: `%${req.query.position}%` } });
@@ -1056,14 +1056,6 @@ exports.FindPrefect = async (req, res) => {
     
             if (req.query.description) {
                 whereClause.push({ description: { [operation.like]: `%${req.query.description}%` } });
-            }
-    
-            if (req.query.term_start) {
-                whereClause.push({ term_start: { [operation.like]: `%${req.query.term_start}%` } });
-            }
-
-            if (req.query.term_end) {
-                whereClause.push({ term_end: { [operation.like]: `%${req.query.term_end}%` } });
             }
     
             db.prefects.findAll({where: {
