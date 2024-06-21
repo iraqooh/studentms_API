@@ -7,22 +7,23 @@ This is a student management system built using Express.js, MySQL, and XAMPP. Th
 ## Technologies Used
 
 - Express.js (Node.js framework)
-- XAMPP or WAMPP (Apache and MySQL stack)
+- XAMPP or WAMP (Apache and MySQL stack)
 - Sequelize (ORM for database interactions)
 - Joi (validation library)
 
 ## Installation
 
-1. [Clone](https://github.com/iraqooh/studentms_API.git) the repository: `git clone https://github.com/iraqooh/studentms_API.git`
-2. Install dependencies: npm install
-3. Update the database credentials in config/db.js and create a MySQL database with the specified name.
-4. Launch XAMPP or WAMPP and start the Apache and MySQL database servers.
-5. Open the project folder in VS Code and start the Express server: ```npm start```
-6. Access the API endpoints using a tool like Postman, Insomnia, cURL or VS Code's Thunder Client extension.
+1. [Clone](https://github.com/iraqooh/studentms_API.git) the repository: `git clone https://github.com/iraqooh/studentms_API.git`.
+2. Run the following command to navigate to the project directory ```cd studentms_API```.
+3. Open the project folder in VS Code using ```code .``` and run ```npm install``` to install dependencies.
+4. Update the database credentials in config/db.js and create a MySQL database with the specified name. Note: You may need to create the MySQL database manually if it does not exist.
+5. Launch XAMPP or WAMPP and start the Apache and MySQL database servers.
+6. Start the Express server: ```npm start```
+7. Access the API endpoints using a tool like Postman, Insomnia, cURL or VS Code's Thunder Client extension.
 
 ## API Endpoints
 
-The base endpoint route is /madiland_api on localhost port 28. Edit server.js to change the port to your desired value.
+The base endpoint route is /madiland_api, accessible on localhost port 28 by default. Edit server.js to change the port to your desired value.
 
 ### Students
 
@@ -71,7 +72,7 @@ The base endpoint route is /madiland_api on localhost port 28. Edit server.js to
 
 ## Database Schema
 
-The database schema is defined in models/. The schema includes the following tables:
+The database schema is defined in models/ directory. The schema includes the following tables:
 
 - students: student_id, first_name, last_name, gender, age, parent_phone_number, physical_address, category, class, status
 - finances: finance_id, student_id, school_fees
@@ -88,7 +89,7 @@ Validation is handled using Joi. The validation rules are defined in each object
 
 ## Author
 
-Harry, Iraku
+Harry Iraku
 
 ## Contributing
 
