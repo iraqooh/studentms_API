@@ -29,7 +29,7 @@ db.sequelize_config.sync(
 require("./routes/madiland.routes")(app);
 
 // define port for project
-const PORT = 28;
+const PORT = 3000;
 
 // Monitor when server starts
 app.listen(PORT, () => {
