@@ -14,33 +14,77 @@ This is a student management system built using Express.js, MySQL, and XAMPP. Th
 
 ## Installation
 
-1. Clone the repository: `git clone (link unavailable)
+1. Clone the repository: `git clone ([https://github.com/iraqooh/studentms_API.git](url {:target="_blank"}))
 2. Install dependencies: npm install
-3. Create a MySQL database and update the database credentials in config/db.js
-4. Start the server: node server.js
-5. Access the API endpoints using a tool like Postman, Insomnia, VS Code's Thunder Client or cURL
+3. Update the database credentials in config/db.js and create a MySQL database with the specified name.
+4. Start the server: ```npm start```
+5. Access the API endpoints using a tool like Postman, Insomnia, VS Code's Thunder Client or cURL.
 
 ## API Endpoints
 
-The base endpoint route is /api/studentms2 on localhost port 8081.
+The base endpoint route is /madiland_api on localhost port 28. Edit server.js to change the port to your desired value.
 
-- POST /addstudent: Create a new student record along with a corresponding finance record
-- GET /getstudents: Retrieve a list of all students
-- GET /findstudent: Retrieve a single student record by their first name
-- PUT /updatestudent/:id: Update a single student record by ID
-- DELETE /deletestudent/:id: Delete a single student record by ID
-- GET /getfinances/:student_id: Retrieve a list of finance records for a student
+### Students
+
+- Create a new student record: POST /addstudent
+- Retrieve a list of all students: GET /getstudents
+- Retrieve a single student record by first name: GET /findstudent
+- Update a single student record by ID: PUT /updatestudent/:id
+- Delete a single student record by ID: DELETE /deletestudent/:id
+
+### Finances
+
+- Retrieve a list of finance records for a student: GET /getfinances/:student_id
+- Make a payment: POST /makepayment
+- Get total payments: GET /totalpayments
+- Get fees balances: GET /feesbalances
+
+### Course Instructors
+
+- Create a new instructor: POST /addinstructor
+- Retrieve a list of all instructors: GET /getinstructors
+
+### Course Catalog
+
+- Create a new course: POST /addcourse
+- Retrieve a list of all courses: GET /getcourses
+- Retrieve course details: GET /getcoursedetails
+- Search for courses based on query parameters such as course_id, course_name, instructor id and department: GET /searchcourses
+
+### Library Book Rentals
+
+- Add a new book: POST /addbook
+- Rent a book: POST /rentabook
+- Retrieve a list of all books: GET /getbooks
+- Find a book based on query parameters such as title, author, book_id and category: GET /findbook
+- Retrieve a list of rented books: GET /getrentedbooks
+- Retrieve books rented by a student: GET /getbooksrentedbystudent
+- Return a book: PUT /returnbook
+
+### School Prefecture
+
+- Add a new prefect: POST /addprefect
+- Retrieve a list of all prefects: GET /getprefects
+- Find a prefect using query parameters such as prefect_id, position, student_id and description: GET /findprefect
+- Update a prefect: PUT /updateprefect
+- Delete a prefect: DELETE /deleteprefect
 
 ## Database Schema
 
-The database schema is defined in models/student.model.js and models/finance.model.js. The schema includes the following tables:
+The database schema is defined in models/. The schema includes the following tables:
 
-- students: id, first_name, last_name, gender, age, parent_phone_number, physical_address, category, class, status
-- finances: id, student_id, school_fees_amount
+- students: student_id, first_name, last_name, gender, age, parent_phone_number, physical_address, category, class, status
+- finances: finance_id, student_id, school_fees
+- payments: payment_id, student_id, amount_paid
+- instructors: instructor_id, instructor_name, title, department
+- courses: course_id, instructor_id, department, course_name, description, credits
+- books: book_id, title, author, category
+- rentals: rent_id, book_id, student_id, return_date
+- prefects: prefect_id, position, description, student_id, term_start, term_end
 
 ## Validation
 
-Validation is handled using Joi. The validation rules are defined in controllers/student.controller.js and controllers/finance.controller.js.
+Validation is handled using Joi. The validation rules are defined in each object creation protocol in controllers/student.controller.js.
 
 ## Contributing
 
