@@ -1,5 +1,5 @@
 module.exports = (sequelize_config, Sequelize) => {
-    const Student = sequelize_config.define('student',
+    const student = sequelize_config.define('student',
     {
         student_id: {
             type: Sequelize.INTEGER,
@@ -34,7 +34,11 @@ module.exports = (sequelize_config, Sequelize) => {
             type: Sequelize.BOOLEAN,
             defaultValue: false
         }
+    }, {
+        defaultScope: {
+            exclude: ['student_id']
+        }
     });
 
-    return Student;
+    return student;
 }

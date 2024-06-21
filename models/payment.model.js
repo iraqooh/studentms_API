@@ -1,8 +1,8 @@
 module.exports = (sequelize_config, sequelize) => {
     const _student = require("./student.model");
-    const finance = sequelize_config.define("finance",
+    const payment = sequelize_config.define("payment",
         {
-            finance_id: { 
+            payment_id: { 
                 type: sequelize.INTEGER,
                 autoIncrement: true,
                 primaryKey: true 
@@ -15,19 +15,12 @@ module.exports = (sequelize_config, sequelize) => {
                     key: 'student_id'
                 }
             },
-            school_fees: {
+            amount_paid: {
                 type: sequelize.INTEGER,
                 allowNull: false,
             },
-        },
-        {
-            defaultScope: {
-                attributes: {
-                    exclude: ['finance_id', 'createdAt','updatedAt', 'student_id' ]
-                }
-            }
         }
     );
 
-    return finance;
+    return payment;
 }

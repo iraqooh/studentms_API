@@ -23,45 +23,13 @@ db.sequelize_config.sync(
     () => { console.log("DB synchronised")}
 );
 
-
 // API Routes
 
-app.get("/n", (req, res) => {
-    res.json(
-        {
-            "status": "Sucess",
-            "status_code": 100,
-            "message": "Welcome to Student MS"
-        }
-    );
-});
-
-app.post("/data", (req, res) => {
-    const data = req.body.data_r;
-    if(!data){
-        res.json({
-            "status": "Error",
-            "status_code": 101,
-            "message": "No Data is available",
-        });
-    }else{
-        res.json(
-            {
-                "status": "Sucess",
-                "status_code": 100,
-                "message": "Welcome to Student MS",
-                "data": `Result - ${data}`
-            }
-        );
-    }
-    
-});
-
 // import student routes
-require("./routes/student.routes")(app); 
+require("./routes/madiland.routes")(app);
 
 // define port for project
-const PORT = 8081;
+const PORT = 28;
 
 // Monitor when server starts
 app.listen(PORT, () => {
