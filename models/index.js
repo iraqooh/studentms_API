@@ -1,8 +1,8 @@
 // import db config
 const dbConfig = require("../config/db.config.js");
 
-const sequelize = require("sequelize");
-const sequelize_config = new sequelize(
+const Sequelize = require("sequelize");
+const sequelize = new Sequelize(
     dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD,
     {
         host: dbConfig.HOST,
@@ -17,29 +17,29 @@ const sequelize_config = new sequelize(
     }
 );
 
-sequelize_config.authenticate().then(
+sequelize.authenticate().then(
     console.log('Connection has been establised successfully.')
 ).catch((error) => {
     console.error('Unable to connect to the database: ', error)
 });
 
 const db = {};
+db.Sequelize = Sequelize;
 db.sequelize = sequelize;
-db.sequelize_config = sequelize_config;
 
-db.students = require("./student.model.js")(sequelize_config, sequelize);
-db.finances = require("./finance.model.js")(sequelize_config, sequelize);
-db.payments = require("./payment.model.js")(sequelize_config, sequelize);
+db.students = require("./student.model.js")(sequelize, Sequelize);
+db.finances = require("./finance.model.js")(sequelize, Sequelize);
+db.payments = require("./payment.model.js")(sequelize, Sequelize);
 // ----------------------------------------------------------------
-db.instructors = require("./instructor.model.js")(sequelize_config, sequelize);
-db.courses = require("./course.model.js")(sequelize_config, sequelize);
+db.instructors = require("./instructor.model.js")(sequelize, Sequelize);
+db.courses = require("./course.model.js")(sequelize, Sequelize);
 // ----------------------------------------------------------------
-db.books = require("./book.model.js")(sequelize_config, sequelize);
-db.rentals = require("./rental.model.js")(sequelize_config, sequelize);
+db.books = require("./book.model.js")(sequelize, Sequelize);
+db.rentals = require("./rental.model.js")(sequelize, Sequelize);
 
 // ----------------------------------------------------------------
 
-db.prefects = require("./prefect.model.js")(sequelize_config, sequelize);
+db.prefects = require("./prefect.model.js")(sequelize, Sequelize);
 
 db.students.hasOne(db.finances, {
     foreignKey: `student_id`,

@@ -1,9 +1,9 @@
 module.exports = {
     HOST: "localhost", // hostname
     PORT: "3306",
-    USER: "root", // username
-    PASSWORD: "", // user password
-    DB: "madiland", // database name
+    USER: "harry", // username
+    PASSWORD: "kaspastinski", // user password
+    DB: "harry", // database name
     dialect: "mysql", // database type
     pool: {
         // maximum number of connections

@@ -1,20 +1,20 @@
-module.exports = (sequelize_config, sequelize) => {
-    const book = sequelize_config.define('book', {
+module.exports = (sequelize, Sequelize) => {
+    const book = sequelize.define('book', {
         book_id: {
-            type: sequelize.INTEGER,
+            type: Sequelize.INTEGER,
             autoIncrement: true,
             primaryKey: true
         },
         title: {
-            type: sequelize.STRING,
+            type: Sequelize.STRING,
             allowNull: false
         },
         author: {
-            type: sequelize.TEXT,
+            type: Sequelize.TEXT,
             allowNull: false
         },
         category: {
-            type: sequelize.STRING,
+            type: Sequelize.STRING,
             allowNull: true
         }
     });

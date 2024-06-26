@@ -35,7 +35,7 @@ module.exports = app => {
 
     // ----------------------------------------------------------------
 
-    // create a new department
+    // routes for managing instructors and courses
     router.post("/addinstructor", madiland_controller.CreateInstructor);
 
     router.post("/addcourse", madiland_controller.CreateCourse);

@@ -1,34 +1,33 @@
-const instructor = require('./instructor.model')
-
-module.exports = (sequelize_config, sequelize) => {
-    const course = sequelize_config.define('course', {
+module.exports = (sequelize, Sequelize) => {
+    const db = require("./index")
+    const course = sequelize.define('course', {
         course_id: {
-            type: sequelize.INTEGER,
+            type: Sequelize.INTEGER,
             autoIncrement: true,
             primaryKey: true
         },
         instructor_id: {
-            type: sequelize.INTEGER,
+            type: Sequelize.INTEGER,
             allowNull: false,
-            reference: {
-                model: instructor,
+            references: {
+                model: db.instructors,
                 key: 'instructor_id'
             }
         },
         department: {
-            type: sequelize.ENUM,
+            type: Sequelize.ENUM,
             values: ['SCIENCES', 'ARTS'],
             allowNull: false
         },
         course_name: {
-            type: sequelize.STRING,
+            type: Sequelize.STRING,
             allowNull: false
         },
         description: {
-            type: sequelize.TEXT
+            type: Sequelize.TEXT
         },
         credits: {
-            type: sequelize.INTEGER,
+            type: Sequelize.INTEGER,
             min: 3,
             allowNull: false
         }

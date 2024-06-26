@@ -1,20 +1,20 @@
-module.exports = (sequelize_config, sequelize) => {
-    const instructor = sequelize_config.define('instructor', {
+module.exports = (sequelize, Sequelize) => {
+    const instructor = sequelize.define('instructor', {
         instructor_id: {
-            type: sequelize.INTEGER,
+            type: Sequelize.INTEGER,
             autoIncrement: true,
             primaryKey: true
         },
         instructor_name: {
-            type: sequelize.STRING,
+            type: Sequelize.STRING,
             allowNull: false
         },
         title: {
-            type: sequelize.TEXT,
+            type: Sequelize.TEXT,
             allowNull: true
         },
         department: {
-            type: sequelize.ENUM,
+            type: Sequelize.ENUM,
             values: ['SCIENCES', 'ARTS'],
             allowNull: false
         }

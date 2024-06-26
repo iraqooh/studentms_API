@@ -23,7 +23,7 @@ This is a student management system built using Express.js, MySQL, and XAMPP. Th
 
 ## API Endpoints
 
-The base endpoint route is /madiland_api, accessible on localhost port 28 by default. Edit server.js to change the port to your desired value.
+The base endpoint route is /madiland_api, accessible on localhost port 7076 by default. Edit server.js to change the port to your desired value.
 
 ### Students
 

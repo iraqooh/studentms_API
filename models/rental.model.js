@@ -1,31 +1,30 @@
-module.exports = (sequelize_config, sequelize) => {
-    const student = require('./student.model')
-    const book = require('./book.model')
+module.exports = (sequelize, Sequelize) => {
+    const db = require("./index")
 
-    const rental = sequelize_config.define('rental', {
+    const rental = sequelize.define('rental', {
         rent_id: {
-            type: sequelize.INTEGER,
+            type: Sequelize.INTEGER,
             autoIncrement: true,
             primaryKey: true
         },
         book_id: {
-            type: sequelize.INTEGER,
+            type: Sequelize.INTEGER,
             allowNull: false,
             references: {
-                model: book,
+                model: db.books,
                 key: 'book_id'
             }
         },
         student_id: {
-            type: sequelize.INTEGER,
+            type: Sequelize.INTEGER,
             allowNull: false,
             references: {
-                model: student,
+                model: db.students,
                 key: 'student_id'
             }        
         },
         return_date: {
-            type: sequelize.DATE,
+            type: Sequelize.DATE,
             allowNull: true
         }
     });

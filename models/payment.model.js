@@ -1,22 +1,22 @@
-module.exports = (sequelize_config, sequelize) => {
-    const _student = require("./student.model");
-    const payment = sequelize_config.define("payment",
+module.exports = (sequelize, Sequelize) => {
+    const db = require("./index");
+    const payment = sequelize.define("payment",
         {
             payment_id: { 
-                type: sequelize.INTEGER,
+                type: Sequelize.INTEGER,
                 autoIncrement: true,
                 primaryKey: true 
             },
             student_id: {
-                type: sequelize.INTEGER,
+                type: Sequelize.INTEGER,
                 allowNull: false,
-                reference: {
-                    model: _student,
+                references: {
+                    model: db.students,
                     key: 'student_id'
                 }
             },
             amount_paid: {
-                type: sequelize.INTEGER,
+                type: Sequelize.INTEGER,
                 allowNull: false,
             },
         }

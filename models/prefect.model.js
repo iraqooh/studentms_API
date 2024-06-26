@@ -1,33 +1,33 @@
-module.exports = (sequelize_config, sequelize) => {
-    const student = require('./student.model')
-    const prefect = sequelize_config.define('prefect', {
+module.exports = (sequelize, Sequelize) => {
+    const db = require('./index')
+    const prefect = sequelize.define('prefect', {
         prefect_id: {
-            type: sequelize.INTEGER,
+            type: Sequelize.INTEGER,
             autoIncrement: true,
             primaryKey: true
         },
         position: {
-            type: sequelize.STRING,
+            type: Sequelize.STRING,
             allowNull: false
         },
         description: {
-            type: sequelize.STRING,
+            type: Sequelize.STRING,
             allowNull: true
         },
         student_id: {
-            type: sequelize.INTEGER,
+            type: Sequelize.INTEGER,
             allowNull: true,
-            reference: {
-                model: student,
+            references: {
+                model: db.students,
                 key: 'student_id'
             }
         },
         term_start: {
-            type: sequelize.DATE,
+            type: Sequelize.DATE,
             allowNull: true
         },
         term_end: {
-            type: sequelize.DATE,
+            type: Sequelize.DATE,
             allowNull: true
         }
     })

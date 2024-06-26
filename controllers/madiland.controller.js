@@ -1,9 +1,6 @@
 const db = require("../models");
 const joi = require("joi");
-const student = db.students;
-const finance = db.finances;
-const payment = db.payments;
-const operation = db.sequelize.Op;
+const operation = db.Sequelize.Op;
 
 const respond = (obj=null, res_type, code, message, result, error=null) => {
     if (res_type === "success") {
@@ -30,8 +27,8 @@ const respond = (obj=null, res_type, code, message, result, error=null) => {
 
 // Retrieve all Students from the db
 exports.GetAllStudents = (req, res) => {
-    student.findAll({
-        include: [finance]
+    db.students.findAll({
+        include: [db.finances]
     })
         .then(
             data => {
@@ -62,7 +59,7 @@ exports.UpdateStudent = (req, res) => {
         // const student_id = req.params.id;
         const id = req.query.id;
         // const student_id = req.params.id;
-        student.update(req.body, {
+        db.students.update(req.body, {
             where: { student_id: id }
         }).then(
             data => {
@@ -145,16 +142,16 @@ exports.CreateStudent = (req, res) => {
             status: req.body.status
         };
 
-        student.create(student_data).then(
+        db.students.create(student_data).then(
             async data => {
                 // if(data == 1){
-                    await finance.create({
+                    await db.finances.create({
                         student_id: data.student_id,
                         school_fees: req.body.school_fees
                     });
 
                     if (req.body.payment) {
-                        await payment.create({
+                        await db.payments.create({
                             student_id: data.student_id,
                             amount_paid: req.body.payment
                         })
@@ -190,7 +187,7 @@ exports.DeleteStudent = async (req, res) => {
      if(req.method == "DELETE"){
 
         const student_id = req.query.id;
-        const student_id_db = await student.findByPk(student_id);
+        const student_id_db = await db.students.findByPk(student_id);
 
         if(student_id_db === null){
 
@@ -203,19 +200,19 @@ exports.DeleteStudent = async (req, res) => {
             return;
         }
 
-        await finance.destroy({
+        await db.finances.destroy({
             where: {
                 student_id: student_id
             }
         });
 
-        await payment.destroy({
+        await db.payments.destroy({
             where: {
                 student_id: student_id
             }
         });
 
-        student.destroy({
+        db.students.destroy({
             where: { student_id: student_id }
         }).then(
             data => {
@@ -260,7 +257,7 @@ exports.SearchStudent = (req, res) => {
     const search_query = req.query.first_name;
     var condition = search_query ? { first_name: { [operation.like] : `%${search_query}%` } } : null;
 
-    student.findAll({where: condition})
+    db.students.findAll({where: condition})
         .then(
             data => {
                 res.send({
@@ -287,21 +284,21 @@ exports.SearchStudent = (req, res) => {
 // Get student finances
 // Retrieve all Students from the db
 exports.GetStudentFinances = (req, res) => {
-    finance.findAll({
+    db.finances.findAll({
         // include: [{model: Student, attributes: []}]
-        include: [student],
+        include: [db.students],
         // attributes: [
         //     'finance_id',
-        //     [db.sequelize.fn('sum', db.sequelize.col('school_fees')), 'total_expected'],
+        //     [db.Sequelize.fn('sum', db.Sequelize.col('school_fees')), 'total_expected'],
         // ],
         // group
     }).then(
             async data => {
 
-                const total_expected = await finance.findAll({
+                const total_expected = await db.finances.findAll({
                     attributes: [
                         // function to calc the sum
-                        [db.sequelize.fn('sum', db.sequelize.col('school_fees')), 'total'],
+                        [db.Sequelize.fn('sum', db.Sequelize.col('school_fees')), 'total'],
                     ],
                     raw: true,
                 });
@@ -330,7 +327,7 @@ exports.GetStudentFinances = (req, res) => {
 exports.MakePayment = async (req, res) => {
      if(req.method == "POST"){
 
-        const student_id_dbx = await student.findByPk(req.body.student_id);
+        const student_id_dbx = await db.students.findByPk(req.body.student_id);
 
         if(student_id_dbx === null){
 
@@ -360,7 +357,7 @@ exports.MakePayment = async (req, res) => {
             student_id: req.body.student_id,
         }
 
-        payment.create(payment_data).then(
+        db.payments.create(payment_data).then(
             async data => {
                 // if(data == 1){
                     
@@ -401,21 +398,21 @@ exports.MakePayment = async (req, res) => {
 
 // Retrieve all Payments
 exports.TotalPayments = (req, res) => {
-    payment.findAll({
+    db.payments.findAll({
         // include: [{model: Student, attributes: []}]
-        include: [student],
+        include: [db.students],
         // attributes: [
         //     'finance_id',
-        //     [db.sequelize.fn('sum', db.sequelize.col('school_fees')), 'total_expected'],
+        //     [db.Sequelize.fn('sum', db.Sequelize.col('school_fees')), 'total_expected'],
         // ],
         // group
     }).then(
             async data => {
 
-                const total_payments_received = await payment.findAll({
+                const total_payments_received = await db.payments.findAll({
                     attributes: [
                         // function to calc the sum
-                        [db.sequelize.fn('sum', db.sequelize.col('amount_paid')), 'total'],
+                        [db.Sequelize.fn('sum', db.Sequelize.col('amount_paid')), 'total'],
                     ],
                     raw: true,
                 });
@@ -445,7 +442,7 @@ exports.FeesBalance = async (req, res) => {
      if(req.method == "GET"){
 
         const payments = await db.payments.findAll({
-            attributes: [[db.sequelize.fn('SUM', db.sequelize.col('amount_paid')), 'total_paid']],
+            attributes: [[db.Sequelize.fn('SUM', db.Sequelize.col('amount_paid')), 'total_paid']],
             group: 'student_id'
         })
 
@@ -458,7 +455,7 @@ exports.FeesBalance = async (req, res) => {
             group: ['payments.student_id'],
             attributes: {
                 include: [
-                    [db.sequelize.literal('school_fees - COALESCE(SUM(payments.amount_paid), 0)'), 'fees_balance']
+                    [db.Sequelize.literal('school_fees - COALESCE(SUM(payments.amount_paid), 0)'), 'fees_balance']
                 ]
             }
         })
@@ -550,7 +547,7 @@ exports.CreateCourse = (req, res) => {
         return;
     }
 
-    const instructor_data = {
+    const course_data = {
         instructor_id: req.body.instructor_id,
         department: req.body.department,
         course_name: req.body.course_name,
@@ -558,7 +555,7 @@ exports.CreateCourse = (req, res) => {
         credits: req.body.credits
     }
 
-    db.instructors.create(instructor_data).then(data => {
+    db.courses.create(course_data).then(data => {
         res.send({
             status: "OK",
             status_code: 282,
@@ -939,7 +936,7 @@ exports.ReturnBook = (req, res) => {
             }
         }).then(data => {
             db.rentals.update(
-                { return_date: db.sequelize.fn('NOW') },
+                { return_date: db.Sequelize.fn('NOW') },
                 { where: { book_id: req.query.id } }
               ).then(data => {
                 respond(res, "success", 200, "Rental status updated", data);
@@ -976,7 +973,7 @@ exports.AddPrefect = (req, res) => {
             position: req.body.position,
             description: req.body.description,
             student_id: req.body.student_id,
-            term_start: db.sequelize.fn('NOW')
+            term_start: db.Sequelize.fn('NOW')
         }
 
         db.prefects.create(prefect_data).then(data => {
@@ -1030,7 +1027,7 @@ exports.FindPrefect = async (req, res) => {
             }
 
             if (req.query.student_id) {
-                const student_id_in_db = await db.prefects.findByPk(req.query.student_id);
+                const student_id_in_db = await db.students.findByPk(req.query.student_id);
                 if (student_id_in_db === null) {
                   respond(res, "information", 420, "Student not found in database", null, null);
                   return;

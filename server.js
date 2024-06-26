@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ extendend: true }));
 // importing models
 const db = require("./models");
 
-db.sequelize_config.sync(
+db.sequelize.sync(
     {force: false}
 ).then(
     () => { console.log("DB synchronised")}
@@ -29,7 +29,7 @@ db.sequelize_config.sync(
 require("./routes/madiland.routes")(app);
 
 // define port for project
-const PORT = 28;
+const PORT = 7076;
 
 // Monitor when server starts
 app.listen(PORT, () => {
