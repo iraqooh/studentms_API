@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "sample": "echo \"Sam is good\" && exit 1",
+    "start": "node server.js"
   },
   "author": "Iraku Harry",
   "license": "ISC",
