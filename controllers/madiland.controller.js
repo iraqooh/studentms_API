@@ -284,7 +284,7 @@ exports.SearchStudent = async (req, res) => {
             whereClause.push({ physical_address: { [operation.like]: `%${req.query.physical_address}%` }})
         }
 
-        db.findAll({
+        db.students.findAll({
             where: {[operation.or] : whereClause}
         }).then(data => {
             res.send({
