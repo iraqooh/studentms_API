@@ -33,7 +33,7 @@ module.exports = app => {
     // route to get fees balances
     router.get("/feesbalances", madiland_controller.FeesBalance);
 
-    router.get("/students", madiland_controller.GetStudents);
+    // router.get("/students", madiland_controller.GetStudents);
 
     // ----------------------------------------------------------------
 
