@@ -172,7 +172,7 @@ exports.CreateStudent = (req, res) => {
             });
         });
 
-     }else{
+     } else{
         res.status(500).send({
             status: "Error",
             status_code: 1011,
@@ -253,31 +253,59 @@ exports.DeleteStudent = async (req, res) => {
 
 
 // Search Student
-exports.SearchStudent = (req, res) => {
-    const search_query = req.query.first_name;
-    var condition = search_query ? { first_name: { [operation.like] : `%${search_query}%` } } : null;
+exports.SearchStudent = async (req, res) => {
+    if (req.method === "GET") {
+        let whereClause = []
 
-    db.students.findAll({where: condition})
-        .then(
-            data => {
+        if (req.query.student_id) {
+            const id_exists = await db.students.findByPk(req.query.student_id)
+            if (id_exists === null) {
                 res.send({
-                    status: "Success",
-                    status_code: 1000,
-                    message: "Students successfully retrieved",
-                    number_of_students: data.length,
-                    results: data
-                });
+                    status: "Not Found",
+                    code: 404,
+                    message: "Student not found"
+                })
+
+                return;
             }
 
-        ).catch(err => {
+            whereClause.push({ student_id: req.query.student_id})
+        }
+
+        if (req.query.first_name) {
+            whereClause.push({ first_name: { [operation.like]: `%${req.query.first_name}%` }})
+        }
+
+        if (req.query.last_name) {
+            whereClause.push({ last_name: { [operation.like]: `%${req.query.last_name}%` }})
+        }
+
+        if (req.query.physical_address) {
+            whereClause.push({ physical_address: { [operation.like]: `%${req.query.physical_address}%` }})
+        }
+
+        db.findAll({
+            where: {[operation.or] : whereClause}
+        }).then(data => {
+            res.send({
+                status: "OK",
+                code: 200,
+                data: data
+            })
+        }).catch(err => {
             res.send({
                 status: "Error",
-                status_code: 1001,
-                message: err.message || "Error occurred while searching Students"
-            });
-        }
-        );
-
+                code: 400,
+                message: err.message || "Database read operation failed"
+            })
+        })
+    } else {
+        res.status(500).send({
+            status: "Bad Request",
+            code: 500,
+            message: "Invalid Request Method"
+        })
+    }
 }
 
 
@@ -437,7 +465,7 @@ exports.TotalPayments = (req, res) => {
         );
 }
 
-// Make a payment
+// Get fees balances
 exports.FeesBalance = async (req, res) => {
      if(req.method == "GET"){
 
@@ -452,7 +480,7 @@ exports.FeesBalance = async (req, res) => {
                 as: 'payments',
                 attributes: []
             }],
-            group: ['payments.student_id'],
+            group: ['finance.finance_id', 'payments.student_id'],
             attributes: {
                 include: [
                     [db.Sequelize.literal('school_fees - COALESCE(SUM(payments.amount_paid), 0)'), 'fees_balance']
