@@ -29,13 +29,13 @@ The base endpoint route is /madiland_api, accessible on localhost port 7076 by d
 
 - Create a new student record: POST /addstudent
 - Retrieve a list of all students: GET /getstudents
-- Retrieve a single student record by first name: GET /findstudent
-- Update a single student record by ID: PUT /updatestudent/:id
-- Delete a single student record by ID: DELETE /deletestudent/:id
+- Retrieve a single student record by first name: GET /findstudent?first_name=Jane
+- Update a single student record by ID: PUT /updatestudent?id=1
+- Delete a single student record by ID: DELETE /deletestudent?id=1
 
 ### Finances
 
-- Retrieve a list of finance records for a student: GET /getfinances/:student_id
+- Retrieve a list of all finance (fees) allocations: GET /getstudentfinances
 - Make a payment: POST /makepayment
 - Get total payments: GET /totalpayments
 - Get fees balances: GET /feesbalances
@@ -49,7 +49,7 @@ The base endpoint route is /madiland_api, accessible on localhost port 7076 by d
 
 - Create a new course: POST /addcourse
 - Retrieve a list of all courses: GET /getcourses
-- Retrieve course details: GET /getcoursedetails
+- Retrieve course details: GET /getcoursedetails?id=1
 - Search for courses based on query parameters such as course_id, course_name, instructor id and department: GET /searchcourses
 
 ### Library Book Rentals
@@ -57,7 +57,7 @@ The base endpoint route is /madiland_api, accessible on localhost port 7076 by d
 - Add a new book: POST /addbook
 - Rent a book: POST /rentabook
 - Retrieve a list of all books: GET /getbooks
-- Find a book based on query parameters such as title, author, book_id and category: GET /findbook
+- Find a book based on query parameters such as title, author, book_id and category: GET /findbook?field_name=value
 - Retrieve a list of rented books: GET /getrentedbooks
 - Retrieve books rented by a student: GET /getbooksrentedbystudent
 - Return a book: PUT /returnbook
@@ -66,7 +66,7 @@ The base endpoint route is /madiland_api, accessible on localhost port 7076 by d
 
 - Add a new prefect: POST /addprefect
 - Retrieve a list of all prefects: GET /getprefects
-- Find a prefect using query parameters such as prefect_id, position, student_id and description: GET /findprefect
+- Find a prefect using query parameters such as prefect_id, position, student_id and description: GET /findprefect?field_name=value
 - Update a prefect: PUT /updateprefect
 - Delete a prefect: DELETE /deleteprefect
 
