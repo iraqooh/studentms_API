@@ -36,7 +36,7 @@ module.exports = (sequelize, Sequelize) => {
         }
     }, {
         defaultScope: {
-            exclude: ['student_id']
+            exclude: ['createdAt', 'updatedAt']
         }
     });
 
